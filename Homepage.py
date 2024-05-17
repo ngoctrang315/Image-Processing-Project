@@ -59,7 +59,6 @@ st.markdown(
 	<p><b style="font-size: 40px;">Instructor Information:</b></p>
    	<div>
         <p>- Teacher: Tran Tien Duc</p>
-        <p>- Email:<a style="color:green" href="ductt@hcmute.edu.vn"> ductt@hcmute.edu.vn</a></p>
 	</div>
     </div>
     """,
