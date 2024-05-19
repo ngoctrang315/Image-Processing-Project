@@ -1,0 +1,5 @@
+ambulance
+bicycle
+bus
+fire_truck
+motorbike

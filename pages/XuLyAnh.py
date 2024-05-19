@@ -58,14 +58,6 @@ def main():
     if 'caption' not in st.session_state:
         st.session_state.caption=None
     st.title("Computer Vision")
-
-    with open("D:/Year3/HK2/XLA/do_an_cuoi_ki/Image-Processing-Project/ModelXuLyAnh/Test_Image.zip", "rb") as fp:
-        btn = st.download_button(
-            label="Download ZIP",
-            data=fp,
-            file_name="Test_Image.zip",
-            mime="application/zip"
-    )
         
     menu = st.sidebar.selectbox("Menu", ("Chuong3", "Chuong4", "Chuong5", "Chuong9"))
     
@@ -132,11 +124,6 @@ def chuong3():
             st.session_state.caption= "HistEqual Image"
             display_image(col2, st.session_state.imgout, "HistEqual Image")
             
-        if buttons_layout[2].button("HistEqualColor"):
-            st.session_state.imgout = c3.HistEqualColor(st.session_state.imgin)
-            st.session_state.caption= "HistEqualColor Image"
-            display_image(col2, st.session_state.imgout, "HistEqualColor Image")
-
         if buttons_layout[3].button("LocalHist"):
             st.session_state.imgout = c3.LocalHist(st.session_state.imgin)
             st.session_state.caption= "LocalHist Image"
@@ -152,9 +139,9 @@ def chuong3():
             st.session_state.caption= "MyBoxFilter Image"
             display_image(col2, st.session_state.imgout, "MyBoxFilter Image")
         
-        if buttons_layout[2].button("BoxFilter"):
+        if buttons_layout[2].button("Gauss"):
             st.session_state.imgout = c3.BoxFilter(st.session_state.imgin)
-            st.session_state.caption= "BoxFilter Image"
+            st.session_state.caption= "Gauss Image"
             display_image(col2, st.session_state.imgout, "BoxFilter Image")
 
         if buttons_layout[3].button("Threshold"):
@@ -178,11 +165,6 @@ def chuong3():
             display_image(col2, st.session_state.imgout, "Gradient Image")
 
 
-    if st.sidebar.button("Save Image"):
-        if st.session_state.imgout is not None:
-            save_image(st.session_state.imgout, file_uploaded)
-        else:
-            st.sidebar.warning("Không có ảnh đầu ra để lưu.")
 
 def chuong4():
     st.subheader("Chương 4")
@@ -221,11 +203,7 @@ def chuong4():
                 st.session_state.caption= "RemoveMoire Image"
                 display_image(col2, st.session_state.imgout, "RemoveMoire Image") 
 
-    if st.sidebar.button("Save Image"):
-        if st.session_state.imgout is not None:
-            save_image(st.session_state.imgout, file_uploaded)
-        else:
-            st.sidebar.warning("Không có ảnh đầu ra để lưu.")
+
 def chuong5():
     st.subheader("Chương 5")
     file_uploaded = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png", "tif"])
@@ -258,11 +236,6 @@ def chuong5():
                 st.session_state.caption= "DenoisestMotion Image"
                 display_image(col2, st.session_state.imgout, "DenoisestMotion Image") 
 
-    if st.sidebar.button("Save Image"):
-        if st.session_state.imgout is not None:
-            save_image(st.session_state.imgout, file_uploaded)
-        else:
-            st.sidebar.warning("Không có ảnh đầu ra để lưu.")
 def chuong9():
     st.subheader("Chương 9")
     file_uploaded = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png", "tif"])
@@ -278,10 +251,6 @@ def chuong9():
             st.subheader("Output Image")
         with col3:
             st.subheader("Buttons")
-            if st.button("Boundary"):
-                st.session_state.imgout = c9.Boundary(st.session_state.imgin)
-                st.session_state.caption= "Boundary Image"
-                display_image(col2, st.session_state.imgout, "Boundary Image")
 
             if st.button("ConnectedComponen"):
                 st.session_state.imgout = c9.ConnectedComponent(st.session_state.imgin)
@@ -293,43 +262,9 @@ def chuong9():
                 st.session_state.caption= "CountRice Image"
                 display_image(col2, st.session_state.imgout, "CountRice Image")  
 
-    if st.sidebar.button("Save Image"):
-        if st.session_state.imgout is not None:
-            save_image(st.session_state.imgout,file_uploaded)
-        else:
-            st.sidebar.warning("Không có ảnh đầu ra để lưu.")
-
-def save_image(image,file_uploaded):
-    output_folder = st.sidebar.text_input("Nhập đường dẫn đến thư mục:", placeholder="path/to/output/folder")
-    if output_folder:
-        if os.path.isdir(output_folder):
-            input_filename = os.path.basename(file_uploaded.name)
-            output_filename = f"{st.session_state.caption}"+"_"+os.path.splitext(input_filename)[0] +".jpg"
-            output_path = os.path.join(output_folder, output_filename)
-            cv2.imwrite(output_path, image)
-            st.sidebar.success(f"Ảnh đã được lưu vào: {output_path}")
-        else:
-            st.sidebar.warning("Đường dẫn thư mục không hợp lệ.")
-    else:
-        st.sidebar.warning("Vui lòng nhập đường dẫn đến thư mục.")
-
 def display_image(column, img, caption):
     column.image(img, caption, use_column_width=True)
 
-
-# def save_image2(image,file_uploaded):
-#     output_folder = st.sidebar.text_input("Nhập đường dẫn đến thư mục:", placeholder="path/to/output/folder")
-#     if output_folder:
-#         if os.path.isdir(output_folder):
-#             input_filename = os.path.basename(file_uploaded.name)
-#             output_filename = f"{st.session_state.caption}"+"_"+os.path.splitext(input_filename)[0] +".jpg"
-#             output_path = os.path.join(output_folder, output_filename)
-#             cv2.imwrite(output_path, image)
-#             st.sidebar.success(f"Ảnh đã được lưu vào: {output_path}")
-#         else:
-#             st.sidebar.warning("Đường dẫn thư mục không hợp lệ.")
-#     else:
-#         st.sidebar.warning("Vui lòng nhập đường dẫn đến thư mục.")
 
 if __name__ == "__main__":
     main()
